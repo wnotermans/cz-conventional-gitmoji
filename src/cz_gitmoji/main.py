@@ -226,14 +226,8 @@ class CommitizenGitmojiCz(BaseCommitizen):
                 "filter": parse_subject,
                 "message": (
                     "Write a short and imperative summary of the code changes: "
-                    "(lower case and no period)\n"
+                    "(Upper case and no period)\n"
                 ),
-            },
-            {
-                "type": "input",
-                "name": "time",
-                "message": "Time spent (i.e. 3h 15m) (press [enter] to skip):\n",
-                "filter": lambda x: "⏰ " + x.strip() if x else "",
             },
             {
                 "type": "input",
@@ -268,7 +262,6 @@ class CommitizenGitmojiCz(BaseCommitizen):
         body = answers["body"]
         footer = answers["footer"]
         is_breaking_change = answers["is_breaking_change"]
-        time = answers["time"]
 
         if scope:
             scope = f"({scope})"
@@ -278,14 +271,12 @@ class CommitizenGitmojiCz(BaseCommitizen):
             footer = f"BREAKING CHANGE: {footer}"
         if footer:
             footer = f"\n\n{footer}"
-        if time:
-            time = f" >>> {time}"
 
         prefix_scope = f"{prefix}{scope}"
         if is_breaking_change:
             prefix_scope = f"{prefix_scope}!"
 
-        message = f"{prefix_scope}: {subject}{time}{body}{footer}"
+        message = f"{prefix_scope}: {subject}{body}{footer}"
 
         return message
 
